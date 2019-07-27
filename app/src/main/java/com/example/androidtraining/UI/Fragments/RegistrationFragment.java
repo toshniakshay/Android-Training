@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.androidtraining.Models.User;
 import com.example.androidtraining.R;
 import com.example.androidtraining.UI.Activities.MainActivity;
 
@@ -44,7 +45,10 @@ public class RegistrationFragment extends Fragment implements
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(
+            @NonNull LayoutInflater inflater,
+            @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.registration_screen, container, false);
     }
 
@@ -53,6 +57,13 @@ public class RegistrationFragment extends Fragment implements
         super.onViewCreated(view, savedInstanceState);
         initView(view);
     }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
 
     private void initView(View view) {
         mFirstName = view.findViewById(R.id.first_name);
@@ -78,21 +89,16 @@ public class RegistrationFragment extends Fragment implements
         mRadioGroup.setOnCheckedChangeListener(this);
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     private void bindCountries(){
         String[] countries=getResources().getStringArray(R.array.countries_array);
-        ArrayAdapter<String> adapterCountry = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, countries);
+        ArrayAdapter<String> adapterCountry = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, countries);
         adapterCountry.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         mSpinCountry.setAdapter(adapterCountry);
     }
 
     private void bindStates(){
         String[] states=getResources().getStringArray(R.array.states_array);
-        ArrayAdapter<String> adapterStates = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, states);
+        ArrayAdapter<String> adapterStates = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, states);
         adapterStates.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         mSpinState.setAdapter(adapterStates);
     }
@@ -106,6 +112,7 @@ public class RegistrationFragment extends Fragment implements
 
     private void onSignUpButtonClick(){
         if(isValid()){
+            // TODO :: Update Navigation and land user to Home Screen
             ((MainActivity) getActivity()).loadFragment(
                     R.id.fragment_container,
                     new LoginFragment(),
@@ -113,6 +120,20 @@ public class RegistrationFragment extends Fragment implements
                     false
             );
         }
+    }
+
+    private User getUser() {
+        User user = new User();
+
+        user.setFirstName(mFirstName.getText().toString());
+        user.setLastName(mLastName.getText().toString());
+        user.setCountry((String) mSpinCountry.getSelectedItem());
+        user.setState((String) mSpinState.getSelectedItem());
+        user.setGender(1);
+        user.setEmailAddress(mEmailAddress.getText().toString());
+        user.setPhoneNumber(mPhoneNumber.getText().toString());
+
+        return user;
     }
 
     @SuppressLint("ResourceType")

@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -25,6 +24,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     private Button mBtnLogin;
     private Button mBtnSignUp;
+
 
     @Nullable
     @Override
@@ -45,6 +45,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     /**
      * Initialise all the members which are needed for the login screen
+     *
      * @param view
      */
     private void initView(View view) {
@@ -85,18 +86,18 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     private void onLoginButtonClick() {
         if (isValid()) {
-            Toast.makeText(getActivity(), "Logged in successfully. Work in Progress",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Logged in successfully. Work in Progress", Toast.LENGTH_SHORT).show();
         }
     }
 
     private boolean isValid() {
         if (TextUtils.isEmpty(mUserName.getEditText().getText().toString())) {
-            Toast.makeText(getActivity(), "Please provide  valid user name",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Please provide  valid user name", Toast.LENGTH_SHORT).show();
             return false;
         }
 
         if (TextUtils.isEmpty(mPassword.getEditText().getText().toString())) {
-            Toast.makeText(getActivity(), "Please provide  valid Password",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Please provide  valid Password", Toast.LENGTH_SHORT).show();
             return false;
         }
 
